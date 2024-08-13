@@ -28,3 +28,9 @@
 
  <p>한 줄에 하나씩 N줄에 걸쳐 백준이의 동생이 말해야 하는 수를 순서대로 출력한다.</p>
 
+ ---
+ - PriorityQueue는 기본적으로 작은 숫자가 poll 된다. (minHeap)
+ - MaxHeap을 선언할 때는 PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder()); 을 사용했다
+ - 중간값을 찾아야할 때 minHeap과 maxHeap을 하나씩 두고, 숫자를 두 힙에 번갈아가며 넣는다. minHeap에는 중간값 이하 값이 들어가도록, maxHeap에는 중간값 초과값이 들어가도록 한다(이 규칙을 어길 경우 값을 swap한다). maxHeap에서 poll한 값이 중간값이 된다.
+ - BufferedWriter를 사용해야 시간초과를 피할 수 있다.
+

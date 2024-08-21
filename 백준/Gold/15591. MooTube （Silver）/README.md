@@ -36,3 +36,69 @@
 
  <p>Q개의 줄을 출력한다. i번째 줄에는 농부 존의 i번째 질문에 대한 답변이 출력되어야 한다.</p>
 
+---
+
+### 풀이과정
+
+1. 플루이드 워셜 알고리즘을 이용하면 간단하게 구현할 수 있지만 O(N^3) 시간복잡도 때문에 시간초과가 났다.
+```
+for(int i=1;i<N+1;i++){
+ for(int j=1;j<N+1;j++){
+  for(int k=1;k<N+1;k++){
+    if(arr[i][k] != -1 && arr[k][j] != -1){
+      arr[i][j]=Math.min(arr[i][j], Math.min(arr[i][k],arr[k][j]);
+     }
+    }
+   }
+  }
+```
+2. BFS방법을 사용
+```
+            queue.add(v);
+            visited[v]=true;
+            while(!queue.isEmpty()){
+                int now = queue.poll();
+                count++;
+                for(int j=0;j<arr.get(now).size();j++){
+                    Node next = arr.get(now).get(j);
+                    if(next.usado >= k  && !visited[next.id]){
+                        queue.add(next.id);
+                        visited[next.id]=true;
+                    }
+                }
+            }
+```
+3. arr[][] 인접행렬 방식을 사용하면 BFS에서 매번 N+1번의 반복을 하기 때문에 시간초과가 난다. 따라서 인접리스트방식 List<List<Integer>> 로 변경했다.
+
+4. 인접리스트에 값을 넣을 때 (인접노드, 비용) 쌍을 넣어야했기 때문에 Node라는 static class를 선언해 사용했다. (인접리스트도 List<List<Node>>로 변경)
+
+```
+        List<List<Node>> arr = new ArrayList<>();
+        for(int i=0;i<N+1;i++){
+            arr.add(new ArrayList<>());
+        }
+
+
+        for(int i=0;i<N-1;i++){
+            st= new StringTokenizer(br.readLine());
+            int p = Integer.parseInt(st.nextToken());
+            int q = Integer.parseInt(st.nextToken());
+            int r= Integer.parseInt(st.nextToken());
+
+            arr.get(p).add(new Node(q,r));
+            arr.get(q).add(new Node(p,r));
+        }
+
+...
+
+(BFS에서)
+ for(int j=0;j<arr.get(now).size();j++){
+                    Node next = arr.get(now).get(j);
+                    if(next.usado >= k  && !visited[next.id]){
+                        queue.add(next.id);
+                        visited[next.id]=true;
+                    }
+                }
+
+
+```
